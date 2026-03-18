@@ -32,7 +32,7 @@ echo "Creating M2 on main..."
 
 # Branch off from M1 to create the feature branch
 echo "Branching 'feature' off from M1..."
-git switch feature "$M1_COMMIT" 2>/dev/null || git switch -c feature "$M1_COMMIT"
+git switch feature 2>/dev/null || git switch -c feature "$M1_COMMIT"
 
 # Create F1 (Target D2)
 echo "Creating F1 on feature..."
