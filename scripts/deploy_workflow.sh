@@ -40,6 +40,9 @@ echo "Creating F1 on feature..."
 F1_COMMIT=$(git rev-parse HEAD)
 git push -u origin feature
 
+echo "Waiting for 20seconds to allow deployment to succeed"
+sleep 20
+
 # Create M3 (Target D1)
 git checkout main
 echo "Creating M3 on main..."
