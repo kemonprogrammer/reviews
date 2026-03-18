@@ -1,51 +1,36 @@
 #!/bin/bash
 
-# Define the array of mock commit messages
-MESSAGES=(
+# Array of base commit messages
+BASE_MESSAGES=(
     "Update db"
-    "Add feature x"
-    "Fix feature y"
-    "Refactor service x"
-    "Clean up config files"
+    "Add feature"
+    "Fix feature"
+    "Refactor service"
+    "Standardize config"
 )
 
-# Select a random message from the array
-RANDOM_INDEX=$((RANDOM % ${#MESSAGES[@]}))
-SELECTED_MESSAGE=${MESSAGES[$RANDOM_INDEX]}
+# Pick a random base message and a random uppercase letter
+RANDOM_INDEX=$((RANDOM % ${#BASE_MESSAGES[@]}))
+RANDOM_LETTER=$(printf "\\$(printf '%03o' $((65 + RANDOM % 26)))")
+SELECTED_MESSAGE="${BASE_MESSAGES[$RANDOM_INDEX]} $RANDOM_LETTER"
 
-# Get current timestamp for unique file content
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 
-# Map the selected message to a specific file and content
-case "$SELECTED_MESSAGE" in
-    "Update db")
-        FILE="db.txt"
-        CONTENT="Some db logic added at $TIMESTAMP"
-        ;;
-    "Add feature x")
-        FILE="feature-x.txt"
-        CONTENT="New functionality for feature x at $TIMESTAMP"
-        ;;
-    "Fix feature y")
-        FILE="feature-y.txt"
-        CONTENT="Patched edge case in feature y at $TIMESTAMP"
-        ;;
-    "Refactor service x")
-        FILE="service-x.txt"
-        CONTENT="Optimized service x architecture at $TIMESTAMP"
-        ;;
-    *)
-        FILE="config.txt"
-        CONTENT="Standardized config formatting at $TIMESTAMP"
-        ;;
-esac
+# Route messages to specific files
+if [[ "$SELECTED_MESSAGE" == *"db"* ]]; then
+    FILE="db.txt"
+    CONTENT="Database logic update ($RANDOM_LETTER) at $TIMESTAMP"
+elif [[ "$SELECTED_MESSAGE" == *"service"* || "$SELECTED_MESSAGE" == *"feature"* ]]; then
+    FILE="service.txt"
+    CONTENT="Update service ($RANDOM_LETTER) at $TIMESTAMP"
+else
+    FILE="config.txt"
+    CONTENT="Configuration tweak ($RANDOM_LETTER) at $TIMESTAMP"
+fi
 
-# Append the content to the designated file
+# Append, stage, and commit
 echo "$CONTENT" >> "$FILE"
-
-# Stage and commit the file
 git add "$FILE"
 git commit -m "$SELECTED_MESSAGE"
 
-# Output a confirmation to the terminal
-echo "Successfully mocked commit: '$SELECTED_MESSAGE' (modified $FILE)"
+echo "Done: Committed '$SELECTED_MESSAGE' to $FILE"
