@@ -39,7 +39,7 @@ echo "Creating F1 on feature..."
 "$PROJECT_ROOT/scripts/commit.sh"
 F1_COMMIT=$(git rev-parse HEAD)
 echo "Pushing changes on branch feature"
-git push -u origin feature -q
+git push -u origin feature >/dev/null 2>&1
 
 echo "Waiting for 20seconds to allow deployment to succeed"
 sleep 20

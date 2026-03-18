@@ -31,6 +31,6 @@ fi
 # Append, stage, and commit
 echo "$CONTENT" >> "$FILE"
 git add "$FILE"
-git commit -m "$SELECTED_MESSAGE"
+git commit -m "$SELECTED_MESSAGE" -q
 
-echo "Done: Committed '$SELECTED_MESSAGE' to $FILE"
+echo "Committed '$SELECTED_MESSAGE' to $FILE"
