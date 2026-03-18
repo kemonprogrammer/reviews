@@ -39,7 +39,7 @@ echo "Creating F1 on feature..."
 "$PROJECT_ROOT/scripts/commit.sh"
 F1_COMMIT=$(git rev-parse HEAD)
 echo "Pushing changes on branch feature"
-git push -u origin feature >/dev/null
+git push -u origin feature >/dev/null 2>&1
 
 echo "Waiting for 20seconds to allow deployment to succeed"
 sleep 20
@@ -50,7 +50,7 @@ echo "Creating M3 on main..."
 "$PROJECT_ROOT/scripts/commit.sh"
 M3_COMMIT=$(git rev-parse HEAD)
 echo "Pushing changes on branch main"
-git push >/dev/null
+git push >/dev/null 2>&1
 
 
 # Return to main branch to leave the repo in a clean state
